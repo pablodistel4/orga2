@@ -1,5 +1,5 @@
 FLAGS = -Wall -Wextra -pedantic
-FILE = punteros
+FILE = stringlib
 all: $(FILE)
 
 $(FILE): $(FILE).o
