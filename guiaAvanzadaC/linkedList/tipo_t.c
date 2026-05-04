@@ -1,16 +1,18 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
+
 #include "tipo_t.h"
 
 
 
 
-fat32_t* new_fat32(){
+fat32_t* new_fat32(int a){
   fat32_t* p = malloc(sizeof(fat32_t));
   if (p==NULL){
     return NULL; 
   }
-  *p=32; 
+  *p=a; 
   return p;
 }
 ext4_t* new_ext4(){

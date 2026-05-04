@@ -12,7 +12,7 @@ typedef uint64_t ext4_t;
 typedef int8_t   ntfs_t;
 
 // 2. Declaramos las firmas de las funciones (¡Ojo, terminan en punto y coma!)
-fat32_t* new_fat32();
+fat32_t* new_fat32(int a);
 ext4_t*  new_ext4();
 ntfs_t*  new_ntfs();
 
