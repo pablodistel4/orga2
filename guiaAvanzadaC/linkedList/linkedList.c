@@ -165,26 +165,33 @@ void intercambiar(list_t* lista, int x, int y){
 void intercambiarNodos(list_t* lista, int x, int y){
     //se asume que los datos de entrada son validos por precondicion.
     if (lista->size>1){ //si el tamanio de la lista es 1 o 0 no hace nada.
-
+        //ajusto los indices para que x siempre sea el chico
+        if (x>y){
+            int temp = x; 
+            x=y;
+            y=temp;
+        }
         //Primero encuentro x e y 
 
         node_t* punteroX= lista->first;
-        
+        node_t* anteriorX= NULL;
         for (int i=0;i<x;i++){
+            anteriorX= punteroX;
             punteroX=punteroX->next;
         }
         node_t* sigX= punteroX->next;
 
         node_t* punteroY= lista->first;
-
+        node_t* anteriorY= NULL;
         for (int i=0;i<y;i++){
+            anteriorY=punteroY;
             punteroY=punteroY->next;
         }
         node_t* sigY=punteroY->next;
 
-        int diferencia= x-y;
+        int diferencia= y-x;
 
-        if (diferencia==1 || diferencia==-1){// si ambos nodos estan pegados
+        if (diferencia==1){// si ambos nodos estan pegados (SE PUEDE OPTIMIZAR PARA SACAR ESTA PARTE)
             if (x==0){ //x es el primero e y es el segundo
 
                 node_t* tercero= punteroY->next; 
@@ -192,49 +199,17 @@ void intercambiarNodos(list_t* lista, int x, int y){
                 punteroY->next= punteroX; 
                 punteroX->next=tercero;
             }
-            else if (y==0){ //y es el primero y x es el segundo
 
-                node_t* tercero= punteroX->next; 
-                lista->first=punteroX; 
-                punteroX->next= punteroY; 
-                punteroY->next=tercero;
-            } else{
-                if (x>y){ //si x es mayor a y...
-                    //busco el anterior de Y 
-                    node_t* anteriorY= lista->first; 
-
-                    for(int j=0;j<y-1;j++){
-                        anteriorY=anteriorY->next;
-                    }                
-                    anteriorY->next=punteroX;
-                    punteroX->next=punteroY;
-                    punteroY->next=sigX; 
-                      
-                }
-                if (y>x){ //si y es mayor a x...
-                    //busco el anterior de x 
-                    node_t* anteriorX= lista->first; 
-
-                    for(int j=0;j<x-1;j++){
-                        anteriorX=anteriorX->next;
-                    }                
+            else{  
                     anteriorX->next=punteroY;
                     punteroY->next=punteroX;
                     punteroX->next=sigY; 
                       
-                }
             }
             
-
         } 
         else if (x==0){ // si x es el primero..
             
-            //busco el anterior de Y 
-            node_t* anteriorY= lista->first; 
-
-            for(int j=0;j<y-1;j++){
-                anteriorY=anteriorY->next;
-            }
             //pongo x en y
             anteriorY->next=punteroX; 
             punteroX->next=sigY;
@@ -243,37 +218,8 @@ void intercambiarNodos(list_t* lista, int x, int y){
             lista->first=punteroY; 
             punteroY->next= sigX;
         }
-        else if (y==0){ // si y es el primero..
-            
-            //busco el anterior de X 
-            node_t* anteriorX= lista->first; 
-
-            for(int j=0;j<x-1;j++){
-                anteriorX=anteriorX->next;
-            }
-            //pongo y en x
-            anteriorX->next=punteroY; 
-            punteroY->next=sigX;
-
-            //pongo y al principio
-            lista->first=punteroX; 
-            punteroX->next= sigY;
-        }
         else{ // si ninguno de los dos el primero, entonces tenemos que buscar el anterior de ambos y hacer ambos cambios
 
-            //busco el anterior de X 
-
-            node_t* anteriorX= lista->first; 
-
-            for(int j=0;j<x-1;j++){
-                anteriorX=anteriorX->next;
-            }
-            //busco el anterior de Y 
-            node_t* anteriorY= lista->first; 
-
-            for(int j=0;j<y-1;j++){
-                anteriorY=anteriorY->next;
-            }
             //hago los cambios
             anteriorX->next=punteroY; 
             punteroY->next= sigX; 
@@ -286,6 +232,11 @@ void intercambiarNodos(list_t* lista, int x, int y){
     }
 }
 
+void invertirlista(list_t* lista){
+
+//pendiente
+
+}
 int main(){
 
     fat32_t* item1 = new_fat32(1);
@@ -317,6 +268,19 @@ int main(){
 
          printf("%u,",*(uint32_t*) actual2->data);
         actual2=actual2->next;
+    }
+    printf("]\n");
+
+    invertirlista(lista);
+
+    node_t* actual3= lista->first; 
+
+    printf("invierto la lista: \n");
+    printf("[");
+    for(int i=0; i<lista->size;i++){
+
+         printf("%u,",*(uint32_t*) actual3->data);
+        actual3=actual3->next;
     }
     printf("]\n");
     eliminarlista(lista);
