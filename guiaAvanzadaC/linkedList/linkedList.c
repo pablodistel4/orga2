@@ -250,7 +250,8 @@ int main(){
     agregaradelante(lista,item1);
     node_t* actual= lista->first; 
 
-    printf("[");
+    free(lista->first);
+    /*printf("[");
     for(int i=0; i<lista->size;i++){
         
         printf("%u,",*(uint32_t*) actual->data);
@@ -287,7 +288,7 @@ int main(){
     rm_fat32(item1);
     rm_fat32(item2);
     rm_fat32(item3);
-    rm_fat32(item4);
+    rm_fat32(item4); */
 
 }
 
