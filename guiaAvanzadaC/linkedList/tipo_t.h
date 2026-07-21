@@ -6,6 +6,12 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+typedef enum e_type {
+TypeFAT32 = 0,
+TypeEXT4 = 1,
+TypeNTFS = 2
+} type_t;
+
 
 // 1. Definimos los tipos de datos
 typedef uint32_t fat32_t;
@@ -24,5 +30,12 @@ ntfs_t*  copy_ntfs(ntfs_t* file);
 void rm_fat32(fat32_t* file);
 void rm_ext4(ext4_t* file);
 void rm_ntfs(ntfs_t* file);
+
+//definimos funciones para devolver los punteros a funciones 
+
+typedef void* (*funcCopy_t)(void*);
+typedef void (*funcRm_t)(void*);
+funcCopy_t getCopyFunction(type_t t);
+funcRm_t getRmFunction(type_t t);
 
 #endif

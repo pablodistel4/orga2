@@ -2,13 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "tipo_t.h"
-
-typedef enum e_type {
-TypeFAT32 = 0,
-TypeEXT4 = 1,
-TypeNTFS = 2
-} type_t;
-
+#include "tipo_t.c"
 typedef struct node {
     void* data;
     struct node* next;
@@ -33,8 +27,8 @@ list_t* crearlista(type_t tipo){
 void agregaradelante(list_t* lista, void* data){
     node_t* nuevonodo= malloc(sizeof(node_t));
 
-    if (nuevonodo!=NULL){
-        switch(lista->type){
+    if (nuevonodo!=NULL){ //ahora que hicimos los getfunction podemos sacar este switch con un puntero a la funcion
+        /*switch(lista->type){
             case TypeFAT32:
                 nuevonodo->data= (void*) copy_fat32(data);
                 break; 
@@ -44,7 +38,9 @@ void agregaradelante(list_t* lista, void* data){
             case TypeNTFS:
                 nuevonodo->data= (void*) copy_ntfs(data);
                 break; 
-        }
+        }*/
+        funcCopy_t funcion = getCopyFunction(lista->type);
+        nuevonodo->data= (void*) funcion(data);
         nuevonodo->next= lista->first;
         lista->first=nuevonodo;
         lista->size++;
@@ -108,13 +104,13 @@ void* eliminar(list_t* lista, int i){
 }
 
 void eliminarlista(list_t* lista){
-
+    funcRm_t funcion= getRmFunction(lista->type);
 
 
     while (lista->first!=NULL)
     {
         void* elem= eliminar(lista,0);
-        switch(lista->type){
+        /*switch(lista->type){
             case TypeFAT32:
                 rm_fat32(elem);
                 break; 
@@ -124,7 +120,8 @@ void eliminarlista(list_t* lista){
             case TypeNTFS:
                 rm_ntfs(elem);
                 break; 
-        }
+        }*/
+       funcion(elem);
     }
     free(lista);
     
@@ -250,8 +247,7 @@ int main(){
     agregaradelante(lista,item1);
     node_t* actual= lista->first; 
 
-    free(lista->first);
-    /*printf("[");
+    printf("[");
     for(int i=0; i<lista->size;i++){
         
         printf("%u,",*(uint32_t*) actual->data);
@@ -288,7 +284,7 @@ int main(){
     rm_fat32(item1);
     rm_fat32(item2);
     rm_fat32(item3);
-    rm_fat32(item4); */
+    rm_fat32(item4); 
 
 }
 

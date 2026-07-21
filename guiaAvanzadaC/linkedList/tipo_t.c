@@ -6,7 +6,6 @@
 
 
 
-
 fat32_t* new_fat32(int a){
   fat32_t* p = malloc(sizeof(fat32_t));
   if (p==NULL){
@@ -66,4 +65,22 @@ void rm_ext4(ext4_t* file){
 }
 void rm_ntfs(ntfs_t* file){
     free(file);
+}
+
+funcCopy_t getCopyFunction(type_t t) {
+    switch (t) {
+        case TypeFAT32: return (funcCopy_t) copy_fat32; break;
+        case TypeEXT4: return (funcCopy_t) copy_ext4; break;
+        case TypeNTFS: return (funcCopy_t) copy_ntfs; break;
+        default: return NULL; break;
+    }
+}
+
+funcRm_t getRmFunction(type_t t) {
+    switch (t) {
+        case TypeFAT32: return (funcRm_t) rm_fat32; break;
+        case TypeEXT4: return (funcRm_t) rm_ext4; break;
+        case TypeNTFS: return (funcRm_t) rm_ntfs; break;
+        default: return NULL; break;
+    }
 }
