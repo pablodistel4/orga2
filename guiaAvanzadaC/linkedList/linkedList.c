@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "tipo_t.h"
-#include "tipo_t.c"
 typedef struct node {
     void* data;
     struct node* next;

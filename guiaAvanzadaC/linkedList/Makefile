@@ -1,4 +1,4 @@
-FLAGS = -Wall -Wextra -pedantic -g -fsanitize=address
+FLAGS = -Wall -Wextra -pedantic -g 
 FILE = linkedList
 FILE2 = tipo_t
 # Creamos una variable explícita para el ejecutable de Windows

@@ -1,6 +1,6 @@
-#ifndef tipo_t.h
+#ifndef TIPO_T_H
 
-#define tipo_t.h
+#define TIPO_T_H
 
 #include <stdio.h>
 #include <stdint.h>
