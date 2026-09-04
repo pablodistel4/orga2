@@ -141,14 +141,14 @@ product_2_f:
 
 
 product_2_f:
-    ; 1. Expandimos tu float (32 bits) a double (64 bits). 
-    ; mejoramos precision delfloat pasandolo a double
+  
+    ;1, mejoramos precision del float pasandolo a double
+
     cvtss2sd xmm0, xmm0
     
-    ; 2. Aseguramos que el entero sea leído como "sin signo" (positivo).
     ; Al copiar ESI a EAX, el procesador limpia de ceros la mitad alta de RAX.
 
-    ; basicamente nos aseguramos de usar el registro de 64 y no el de 32 para que no lo tome como neg,
+    ; 2.basicamente nos aseguramos de usar el registro de 64 y no el de 32 para que no lo tome como neg,
     ; pasandolo a un registro nuevo, se limpian los 32 bits mas significativos, (en este caso usamos rax)
 
     mov eax, esi
@@ -203,6 +203,7 @@ product_2_f:
 ;f8-> XMM7
 ;x9->[RBP+ 40]
 ;f9->[RBP+48]
+
 product_9_f:
 	;prologo
 	push rbp
