@@ -138,35 +138,26 @@ alternate_sum_8:
 ; f1-> XMM0 
 
 product_2_f:
-
-
-product_2_f:
   
+  ;vamos a hacer toda la mutiplicacion en floats porque los double son 'demasiado precisos para la catedra' 
+  mov r10D, esi
+  cvtsi2ss xmm1, r10 
+  mulss xmm0, xmm1 
+
+  cvttss2si r11, xmm0  ;la segunda t viene 'truncate' porque hay que hacerlo menos preciso todavia para los tests xd.
+  mov [rdi], r11d
+  ret
+
     ;1, mejoramos precision del float pasandolo a double
-
-    cvtss2sd xmm0, xmm0
+    ;cvtss2sd xmm0, xmm0
+    ;pasamos el int a un registro para limpiar los 32bits mas significativos
+    ;mov eax, esi
+    ;cvtsi2sd xmm1, rax  ; Convertimos ese entero limpio a double
+    ;mulsd xmm0, xmm1
+    ;cvtsd2si r10, xmm0
+    ; Escribimos exactamente 32 bits en el puntero de destino
+    ;mov [rdi], r10d
     
-    ; Al copiar ESI a EAX, el procesador limpia de ceros la mitad alta de RAX.
-
-    ; 2.basicamente nos aseguramos de usar el registro de 64 y no el de 32 para que no lo tome como neg,
-    ; pasandolo a un registro nuevo, se limpian los 32 bits mas significativos, (en este caso usamos rax)
-
-    mov eax, esi
-
-    
-    cvtsi2sd xmm1, rax  ; Convertimos ese entero limpio a double
-    
-    ; 3. Multiplicamos en precisión doble (mulsd en lugar de mulss)
-    mulsd xmm0, xmm1
-    
-    ; 4. Truncamos el double a entero. Usamos R10 (64 bits) por si el 
-    ; resultado de la cuenta es gigantesco y no entra en 32 bits.
-    cvttsd2si r10, xmm0
-    
-    ; 5. Escribimos exactamente 32 bits en el puntero de destino
-    mov [rdi], r10d
-    
-    ret
 
 
   ;cvtsi2ss XMM1, ESI

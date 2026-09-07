@@ -60,7 +60,29 @@ cantidad_total_de_elementos:
 		ret
 
 ;extern uint32_t cantidad_total_de_elementos_packed(packed_lista_t* lista);
-;registros: lista[?]
+;registros: lista->RDI
 cantidad_total_de_elementos_packed:
+	.prologo: 
+	push rbp 
+	mov rbp, rsp 
+	xor rax, rax ;siempre hay que limpiar rax??????
+	.nudo: 
+
+	mov rdi, qword [rdi]   ;ahora rdi apunta a head* 
+
+	.ciclo:
+
+	cmp rdi, 0 
+	JE .epilogo 
+
+	mov r8d, dword [rdi+ PACKED_NODO_OFFSET_LONGITUD]
+	add rax, r8
+
+	mov rdi, qword[rdi+ NODO_OFFSET_NEXT] 
+	JMP .ciclo
+
+	.epilogo: 
+
+	pop rbp 
 	ret
 

@@ -9,23 +9,23 @@
 
 int main() {
 	
-	nodo_t lista1; 
+	packed_nodo_t lista1; 
 
 	lista1.next= NULL;
 	lista1.categoria=2; 
 	lista1.longitud= 3;
 	lista1.arreglo=NULL;
-	nodo_t lista2; 
+	packed_nodo_t lista2; 
 
 	lista2.next= &lista1;
 	lista2.categoria=2; 
 	lista2.longitud= 3;
 	lista2.arreglo=NULL;
 
-	lista_t lista_en; 
+	packed_lista_t lista_en; 
 	lista_en.head=&lista2;
 	
-	uint32_t res=cantidad_total_de_elementos(&lista_en);
+	uint32_t res=cantidad_total_de_elementos_packed(&lista_en);
 	printf("len: %d \n", res);
 	return 0;
 }
