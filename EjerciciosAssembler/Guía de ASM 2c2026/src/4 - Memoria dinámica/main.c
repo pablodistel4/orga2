@@ -8,6 +8,15 @@
 #include "Memoria.h"
 
 int main() {
-	/* Acá pueden realizar sus propias pruebas */
+	
+	int32_t res= strCmp("perro","gato");
+	
+	char palabra[]= "hola";
+	char* res2= strClone(palabra);
+	printf("palabra= %s \n",res2 );
+	//int32_t res1= strLen(palabra); 
+	//printf("tamanio= %d \n",res1 );
+
+	free(res2);
 	return 0;
 }
