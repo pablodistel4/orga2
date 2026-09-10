@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
     uint32_t cant= 3;
     ejercicio2(&item1,id,cant,palabra); 
 
-    print("")
+    printf("%d", sizeof(item1.nombre));
     printf("nombre=%s. \n id= %d \n cantidad = %d",item1.nombre,item1.id,item1.cantidad);
 
     return 0;
