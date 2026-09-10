@@ -9,4 +9,18 @@
 
 int main(int argc, char* argv[]) {
 	
+    item_t item1; 
+
+    char* palabra= "pablo"; 
+
+    uint32_t id= 2;
+    uint32_t cant= 3;
+    ejercicio2(&item1,id,cant,palabra); 
+
+    print("")
+    printf("nombre=%s. \n id= %d \n cantidad = %d",item1.nombre,item1.id,item1.cantidad);
+
+    return 0;
+    
+
 }

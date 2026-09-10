@@ -11,9 +11,9 @@ FALSE EQU 0
 ; Marca un ejercicio como hecho
 TRUE  EQU 1
 
-ITEM_OFFSET_NOMBRE EQU 9
-ITEM_OFFSET_ID EQU 16
-ITEM_OFFSET_CANTIDAD EQU 24
+ITEM_OFFSET_NOMBRE EQU 0  ;el nombre son 9 bytes asi que se come una celda y un byte mas
+ITEM_OFFSET_ID EQU 8   
+ITEM_OFFSET_CANTIDAD EQU 12
 
 POINTER_SIZE EQU 4
 UINT32_SIZE EQU 8
@@ -21,10 +21,10 @@ UINT32_SIZE EQU 8
 ; Marcar el ejercicio como hecho (`true`) o pendiente (`false`).
 
 global EJERCICIO_1_HECHO
-EJERCICIO_1_HECHO: db FALSE ; Cambiar por `TRUE` para correr los tests.
+EJERCICIO_1_HECHO: db TRUE ; Cambiar por `TRUE` para correr los tests.
 
 global EJERCICIO_2_HECHO
-EJERCICIO_2_HECHO: db FALSE ; Cambiar por `TRUE` para correr los tests.
+EJERCICIO_2_HECHO: db TRUE ; Cambiar por `TRUE` para correr los tests.
 
 global EJERCICIO_3_HECHO
 EJERCICIO_3_HECHO: db FALSE ; Cambiar por `TRUE` para correr los tests.
@@ -34,18 +34,45 @@ EJERCICIO_4_HECHO: db FALSE ; Cambiar por `TRUE` para correr los tests.
 
 global ejercicio1
 ejercicio1:
-	add edi, ecx
-	add edi, edx
-    add edi, ebx
-    add edi, r9d
-	mov eax, edi
+	push rbp
+	mov rbp,rsp 
+
+
+	add RDI , RSI
+	add RDI, rdx
+    add rdi, rcx
+    add rdi, r8
+	mov rax, rdi
+
+	pop rbp
 	ret
 
 global ejercicio2
+;RDI-> puntero al item 
+;RSI-> ID
+;RDX-> cantidad
+;RCX-> puntero nombre
 ejercicio2:
-	mov [rdi+ITEM_OFFSET_ID], rsi
-	mov [rdi+ITEM_OFFSET_CANTIDAD], rdx
-	call strcpy 
+	push rbp 
+	mov rbp, rsp 
+	;tenemos que usar rdi para usar strcopy, asi que nos guardamos el puntero en otro no volatil
+	;push R12 
+	;sub RSP, 8 
+
+	;MOV R12, RDI  ;ahora el puntero esta en R12
+
+	mov [rdi+ITEM_OFFSET_ID], esi
+	mov [rdi+ITEM_OFFSET_CANTIDAD], edx
+
+	;tenemos que poner en rdi la direccion donde guardar el nombre, y en rsi el nombre
+
+	;mov rdi, [R12+ITEM_OFFSET_NOMBRE] 
+	mov rsi, rcx
+	call strcpy ;strcpy(dest, src)
+
+	;add RSP,8 
+	;pop r12
+	pop rbp
 	ret
 
 
